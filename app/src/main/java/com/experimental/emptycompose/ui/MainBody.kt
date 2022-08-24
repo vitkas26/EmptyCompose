@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.ui.theme
+package com.experimental.emptycompose.theme
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,10 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.experimental.emptycompose.data.BottomSheetType
-import com.experimental.emptycompose.data.Rates
-import com.experimental.emptycompose.data.lisOfFullRates
-import com.experimental.emptycompose.data.listOfRates
+import com.experimental.emptycompose.ui.data.BottomSheetType
+import com.experimental.emptycompose.ui.data.Rates
+import com.experimental.emptycompose.ui.data.lisOfFullRates
+import com.experimental.emptycompose.ui.data.listOfRates
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -36,35 +36,54 @@ fun MainBody(
         listOfRates
     }
 
-    LazyColumn(Modifier.fillMaxHeight(),
+    LazyColumn(
+        Modifier.fillMaxHeight(),
     ) {
         item { MainHeader() }
         items(lazyItems) { item ->
-            MainRates(item, onBottomSheetValue, getIdForBottomSheet, getBottomSheetState, dialogListener)
+            MainRates(
+                item,
+                onBottomSheetValue,
+                getIdForBottomSheet,
+                getBottomSheetState,
+                dialogListener
+            )
         }
         item { Spacer(modifier = Modifier.padding(bottom = 20.dp)) }
-        item {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        expandSize = 1
-                    },
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.padding(bottom = 20.dp))
-                Text(text = "Дополнительные валюты", color = Color.White)
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "DropDown",
-                    tint = Color.White
-                )
+        if (lazyItems.size == listOfRates.size) {
+            item {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            expandSize = 1
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.padding(bottom = 20.dp))
+                    Text(text = "Дополнительные валюты", color = Color.White)
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "DropDown",
+                        tint = Color.White
+                    )
+                }
+                MainFooter()
             }
-            MainFooter()
+        } else {
+            item {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+
+                }
+                MainFooter()
+            }
         }
     }
 }
-
 
 
 //    var expand by remember { mutableStateOf(0) }

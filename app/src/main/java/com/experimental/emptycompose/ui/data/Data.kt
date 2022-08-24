@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.data
+package com.experimental.emptycompose.ui.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home

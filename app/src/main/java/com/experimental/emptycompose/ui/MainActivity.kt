@@ -1,4 +1,4 @@
-package com.experimental.emptycompose
+package com.experimental.emptycompose.ui
 
 import android.os.Bundle
 import android.widget.Toast
@@ -11,10 +11,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import com.experimental.emptycompose.ui.theme.*
-import com.experimental.emptycompose.data.BottomSheetType
-import com.experimental.emptycompose.data.lisOfFullRates
-import com.experimental.emptycompose.data.listOfDrawer
+import com.experimental.emptycompose.theme.*
+import com.experimental.emptycompose.ui.data.BottomSheetType
+import com.experimental.emptycompose.ui.data.lisOfFullRates
+import com.experimental.emptycompose.ui.data.listOfDrawer
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
             val onBottomSheetValue = { modalBottomSheetState }
             val getIdForDialogs = { index: Int -> id = index }
             var bottomSheetType by remember { mutableStateOf(BottomSheetType.BUY)}
-            val getBottomSheetState = {state:BottomSheetType -> bottomSheetType = state}
+            val getBottomSheetState = {state: BottomSheetType -> bottomSheetType = state}
             val keyboardController = LocalSoftwareKeyboardController.current
             val openDialog = remember { mutableStateOf(false) }
             val dialogListener = {state:Boolean -> openDialog.value = state}
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     scaffoldState = scaffoldState,
                     topBar = {
-                        com.experimental.emptycompose.ui.theme.navigation.AppBar(
+                        com.experimental.emptycompose.ui.navigation.AppBar(
                             onNavigationIconClick = {
                                 scope.launch {
                                     scaffoldState.drawerState.open()

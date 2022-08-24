@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.ui.theme
+package com.experimental.emptycompose.theme
 
 import androidx.compose.ui.graphics.Color
 

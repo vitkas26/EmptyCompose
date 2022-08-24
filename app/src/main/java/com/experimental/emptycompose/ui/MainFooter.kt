@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.ui.theme
+package com.experimental.emptycompose.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -33,7 +33,6 @@ fun MainFooter() {
         Text(
             text = "Лицензия АГФ НБ РК №7520029 от 23.09.2020",
             fontSize = 12.sp,
-            fontWeight = FontWeight.Thin,
             color = Color.Blue
         )
     }

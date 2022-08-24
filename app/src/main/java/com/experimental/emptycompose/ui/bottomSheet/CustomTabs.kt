@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.ui.theme
+package com.experimental.emptycompose.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.experimental.emptycompose.data.BottomSheetType
+import com.experimental.emptycompose.ui.data.BottomSheetType
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

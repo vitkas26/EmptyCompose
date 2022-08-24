@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.data
+package com.experimental.emptycompose.ui.data
 
 data class Rates(
     val firstNum: String,

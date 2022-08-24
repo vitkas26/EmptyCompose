@@ -1,7 +1,6 @@
-package com.experimental.emptycompose.ui.theme
+package com.experimental.emptycompose.theme
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text

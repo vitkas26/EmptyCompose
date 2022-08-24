@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.ui.theme
+package com.experimental.emptycompose.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,15 +29,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomTextFieldSell(
+fun CustomTextFieldBuy(
     modifier: Modifier = Modifier,
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
-    placeholderText: String = "1",
+    placeholderText: String,
     fontSize: TextUnit = 28.sp
 ) {
+
     var text by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+
 
     BasicTextField(modifier = modifier
         .background(

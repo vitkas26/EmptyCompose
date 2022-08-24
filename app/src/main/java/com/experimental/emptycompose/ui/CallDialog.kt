@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.ui.theme
+package com.experimental.emptycompose.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,7 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.experimental.emptycompose.data.Rates
+import com.experimental.emptycompose.theme.MigBlue
+import com.experimental.emptycompose.ui.data.Rates
 
 @Composable
 fun CallDialog(dialogListener: (Boolean) -> Unit, item: Rates) {
