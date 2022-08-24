@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.experimental.emptycompose.R
-import com.experimental.emptycompose.ui.theme.data.MenuItem
+import com.experimental.emptycompose.data.MenuItem
 
 @Composable
 fun DrawerHeader(

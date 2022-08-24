@@ -13,8 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.experimental.emptycompose.ui.theme.data.BottomSheetType
-import com.experimental.emptycompose.ui.theme.data.Rates
+import com.experimental.emptycompose.data.BottomSheetType
+import com.experimental.emptycompose.data.Rates
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -69,6 +69,7 @@ fun MainRates(
         Column(
             Modifier
                 .clickable {
+                    getIdForBottomSheet(item.id)
                     dialogListener(true)
                 }
                 .weight(1f)

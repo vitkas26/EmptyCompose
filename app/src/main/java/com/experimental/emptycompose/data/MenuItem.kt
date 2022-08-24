@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.ui.theme.data
+package com.experimental.emptycompose.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight

@@ -15,10 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.experimental.emptycompose.ui.theme.data.BottomSheetType
-import com.experimental.emptycompose.ui.theme.data.Rates
-import com.experimental.emptycompose.ui.theme.data.lisOfFullRates
-import com.experimental.emptycompose.ui.theme.data.listOfRates
+import com.experimental.emptycompose.data.BottomSheetType
+import com.experimental.emptycompose.data.Rates
+import com.experimental.emptycompose.data.lisOfFullRates
+import com.experimental.emptycompose.data.listOfRates
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

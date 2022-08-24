@@ -1,5 +1,7 @@
 package com.experimental.emptycompose.ui.theme
+
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -8,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,8 +33,12 @@ fun MainHeader() {
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "КУРСЫ", color = Color.White, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.padding(vertical = 6.dp))
+            Text(
+                text = "КУРСЫ",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 6.dp)
+            )
             Text(
                 text = "ЗОЛОТЫЕ",
                 color = Color.Yellow,
@@ -46,14 +53,17 @@ fun MainHeader() {
             )
         }
         Column(
-            Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally
+            Modifier
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painterResource(id = R.drawable.mig),
+                painter = painterResource(id = R.drawable.mig),
+                contentScale = ContentScale.Crop,
                 contentDescription = "Logo",
-                Modifier
-                    .fillMaxHeight(0.2f)
+                modifier = Modifier
                     .clip(RoundedCornerShape(55.dp))
+                    .fillMaxWidth()
             )
         }
         Column(
@@ -62,8 +72,12 @@ fun MainHeader() {
                 .padding(vertical = 18.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "ВАЛЮТ", color = Color.White, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.padding(vertical = 6.dp))
+            Text(
+                text = "ВАЛЮТ",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 6.dp)
+            )
             Text(
                 text = "Национального банка РК",
                 textAlign = TextAlign.Center,
@@ -73,13 +87,18 @@ fun MainHeader() {
             )
         }
     }
-        Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.Center) {
-            Text(
-                text = "на 22 августа 2022 10:23",
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "на 22 августа 2022 10:23",
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }

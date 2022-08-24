@@ -8,8 +8,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.experimental.emptycompose.ui.theme.data.Rates
+import com.experimental.emptycompose.data.Rates
 
 @Composable
 fun CallDialog(dialogListener: (Boolean) -> Unit, item: Rates) {
@@ -34,7 +32,7 @@ fun CallDialog(dialogListener: (Boolean) -> Unit, item: Rates) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
-                    .background(color = Color.White.copy(alpha = 0.5f)),
+                    .background(color = Color.White.copy(alpha = 0.7f)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {

@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -13,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.experimental.emptycompose.ui.theme.*
-import com.experimental.emptycompose.ui.theme.data.BottomSheetType
-import com.experimental.emptycompose.ui.theme.data.lisOfFullRates
-import com.experimental.emptycompose.ui.theme.data.listOfDrawer
+import com.experimental.emptycompose.data.BottomSheetType
+import com.experimental.emptycompose.data.lisOfFullRates
+import com.experimental.emptycompose.data.listOfDrawer
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +38,6 @@ class MainActivity : ComponentActivity() {
 
 
             ModalBottomSheetLayout(
-                sheetShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
                 sheetState = modalBottomSheetState,
                 sheetContent = {
                     BottomSheetContent(item = lisOfFullRates[id], type = bottomSheetType)
@@ -72,14 +70,13 @@ class MainActivity : ComponentActivity() {
                     }) {
                     Column {
                         CustomTabs(onBottomSheetValue, getIdForDialogs, getBottomSheetState, dialogListener)
+                        }
                     }
                 }
-                if (openDialog.value){
-                    CallDialog(dialogListener, item = lisOfFullRates[id])
-                }
+            if (openDialog.value){
+                CallDialog(dialogListener, item = lisOfFullRates[id])
             }
         }
-
     }
 }
 
