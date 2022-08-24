@@ -4,10 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -15,14 +13,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.experimental.emptycompose.ui.theme.data.BottomSheetType
 import com.experimental.emptycompose.ui.theme.data.Rates
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainRates(item: Rates) {
+fun MainRates(
+    item: Rates,
+    onBottomSheetValue: () -> ModalBottomSheetState,
+    getIdForBottomSheet: (Int) -> Unit,
+    getBottomSheetState: (BottomSheetType) -> Unit,
+    dialogListener: (Boolean) -> Unit
+) {
     var color = Color.White
+    val scopeBottomSheet = rememberCoroutineScope()
+    val scopeBottomSheetId = rememberCoroutineScope()
+
     if (item.name == "GOLD") {
         color = Color.Yellow
     }
+
     Row(
         Modifier
             .padding(start = 50.dp, end = 50.dp, top = 8.dp)
@@ -30,6 +41,15 @@ fun MainRates(item: Rates) {
         Column(
             Modifier
                 .clickable {
+                    scopeBottomSheet.launch {
+                        onBottomSheetValue
+                            .invoke()
+                            .show()
+                    }
+                    scopeBottomSheetId.launch {
+                        getIdForBottomSheet(item.id)
+                        getBottomSheetState(BottomSheetType.BUY)
+                    }
                 }
                 .weight(1f)
                 .clip(RoundedCornerShape(4.dp))
@@ -48,7 +68,9 @@ fun MainRates(item: Rates) {
         Spacer(modifier = Modifier.padding(end = 20.dp))
         Column(
             Modifier
-                .clickable {}
+                .clickable {
+                    dialogListener(true)
+                }
                 .weight(1f)
                 .height(50.dp),
             verticalArrangement = Arrangement.Center,
@@ -64,6 +86,15 @@ fun MainRates(item: Rates) {
         Spacer(modifier = Modifier.padding(end = 20.dp))
         Column(
             Modifier
+                .clickable {
+                    scopeBottomSheet.launch {
+                        getIdForBottomSheet(item.id)
+                        getBottomSheetState(BottomSheetType.SELL)
+                        onBottomSheetValue
+                            .invoke()
+                            .show()
+                    }
+                }
                 .weight(1f)
                 .clip(RoundedCornerShape(4.dp))
                 .background(Color.White)
@@ -78,25 +109,5 @@ fun MainRates(item: Rates) {
                 color = MigBackground
             )
         }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun createBottomSheet() {
-    BottomSheetScaffold(
-        sheetContent = {BottomSheetContent()}
-    ) {
-        
-    }
-
-
-}
-
-@Composable
-fun BottomSheetContent(){
-    Box(modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center){
-
     }
 }

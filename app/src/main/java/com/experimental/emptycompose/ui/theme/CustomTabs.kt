@@ -1,15 +1,9 @@
 package com.experimental.emptycompose.ui.theme
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,17 +11,18 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.experimental.emptycompose.MainActivity
-import com.experimental.emptycompose.ui.theme.data.Data
-import com.experimental.emptycompose.ui.theme.data.Rates
+import com.experimental.emptycompose.ui.theme.data.BottomSheetType
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CustomTabs() {
+fun CustomTabs(
+    onBottomSheetValue: () -> ModalBottomSheetState,
+    getIdForBottomSheet: (Int) -> Unit,
+    getBottomSheetState: (BottomSheetType) -> Unit,
+    dialogListener: (Boolean) -> Unit
+) {
     var selectedIndex by remember { mutableStateOf(0) }
     val list = listOf("Курсы Валют", "Ближайшие пункты")
-
-    val listRates = Data.listOfRates
-    val listAdditional = Data.lisOfAdditional
 
     TabRow(selectedTabIndex = selectedIndex,
         backgroundColor = MigGrey,
@@ -66,20 +61,38 @@ fun CustomTabs() {
             )
         }
     }
+    TabContent(selectedIndex, onBottomSheetValue, getIdForBottomSheet, getBottomSheetState, dialogListener)
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun TabContent(
+    selectedIndex: Int,
+    onBottomSheetValue: () -> ModalBottomSheetState,
+    getIdForBottomSheet: (Int) -> Unit,
+    getBottomSheetState: (BottomSheetType) -> Unit,
+    dialogListener: (Boolean) -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(top = 16.dp, start = 18.dp, end = 18.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(MigBackground)
-            .verticalScroll(rememberScrollState())
+//            .verticalScroll(rememberScrollState())
     ) {
         when (selectedIndex) {
-            0 -> MainBody(listRates, listAdditional)
-            else -> MainHeader()
+            0 -> MainBody(onBottomSheetValue,
+                getIdForBottomSheet,
+                getBottomSheetState,
+                dialogListener
+            )
+            else -> {
+                MainHeader()
+                MainFooter()
+            }
         }
     }
 }
-
 
 
 

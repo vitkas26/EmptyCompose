@@ -73,4 +73,13 @@ fun MainHeader() {
             )
         }
     }
+        Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.Center) {
+            Text(
+                text = "на 22 августа 2022 10:23",
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+    }
 }

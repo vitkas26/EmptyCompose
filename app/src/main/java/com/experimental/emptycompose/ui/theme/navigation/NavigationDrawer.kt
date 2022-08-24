@@ -39,7 +39,7 @@ fun DrawerHeader(
             painterResource(id = R.drawable.mig), contentDescription = "icon",
             modifier = Modifier
                 .padding(horizontal = 32.dp, vertical = 20.dp)
-                .size(30.dp)
+                .size(50.dp)
         )
         Text(text = "МиГ", style = itemTextStyle)
     }
@@ -47,12 +47,10 @@ fun DrawerHeader(
         Divider(
             color = MigBlue,
             modifier = Modifier
-                .padding(start = 20.dp)
-                .fillMaxWidth(0.5f),
-            thickness = 0.4.dp,
+                .fillMaxWidth(0.7f),
+            thickness = 0.8.dp,
         )
     }
-
 }
 
 
@@ -86,7 +84,7 @@ fun DrawerBody(
                         style = itemTextStyle
                     )
                 }
-                Column(Modifier.weight(2f)) {
+                Column(Modifier.weight(1f)) {
                     Icon(
                         imageVector = item.endIcon,
                         contentDescription = item.contentDescription,
