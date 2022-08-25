@@ -77,7 +77,6 @@ fun DrawerBody(
                         tint = MigBlue
                     )
                 }
-//                Spacer(modifier = Modifier.width(16.dp))
                 Column(Modifier.weight(3f)) {
                     Text(
                         text = item.title,

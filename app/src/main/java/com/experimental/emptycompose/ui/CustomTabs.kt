@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.theme
+package com.experimental.emptycompose.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,6 +11,10 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.experimental.emptycompose.theme.MainHeader
+import com.experimental.emptycompose.theme.MigBackground
+import com.experimental.emptycompose.theme.MigGrey
+import com.experimental.emptycompose.theme.MigGreyText
 import com.experimental.emptycompose.ui.data.BottomSheetType
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -81,13 +85,14 @@ fun TabContent(
 //            .verticalScroll(rememberScrollState())
     ) {
         when (selectedIndex) {
-            0 -> MainBody(onBottomSheetValue,
+            0 -> MainBody(
+                onBottomSheetValue,
                 getIdForBottomSheet,
                 getBottomSheetState,
                 dialogListener
             )
             else -> {
-                MainHeader()
+                AddressesBody()
                 MainFooter()
             }
         }

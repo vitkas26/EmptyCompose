@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.theme
+package com.experimental.emptycompose.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -29,8 +29,8 @@ fun MainFooter() {
             fontWeight = FontWeight.Bold,
             color = Color.Blue
         )
-        Spacer(modifier = Modifier.padding(4.dp))
         Text(
+            modifier = Modifier.padding(4.dp),
             text = "Лицензия АГФ НБ РК №7520029 от 23.09.2020",
             fontSize = 12.sp,
             color = Color.Blue

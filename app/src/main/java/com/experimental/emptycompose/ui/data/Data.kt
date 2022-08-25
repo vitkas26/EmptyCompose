@@ -2,7 +2,10 @@ package com.experimental.emptycompose.ui.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Share
+import com.experimental.emptycompose.R
 
 val listOfRates = mutableListOf(
     Rates("475.5", "USD", "479.5", "Доллар США", 0),
@@ -60,6 +63,65 @@ val listOfDrawer =
             icon = Icons.Default.Share,
         ),
     )
+
+val listOfPoints = mutableListOf(
+    Points(
+        heading = "Миг 1",
+        kilometers = "~ 20.км",
+        address = "мкр.Казахфильм ул.Арычная 82",
+        whatsAppIcon = R.drawable.whatsapp_logo,
+        phoneIcon = Icons.Default.Phone,
+        mapRoute = Icons.Default.Place
+    ),
+    Points(
+        heading = "Миг 1",
+        kilometers = "~ 20.км",
+        address = "мкр.Казахфильм ул.Арычная 82",
+        whatsAppIcon = R.drawable.whatsapp_logo,
+        phoneIcon = Icons.Default.Phone,
+        mapRoute = Icons.Default.Place
+    ),
+    Points(
+        heading = "Миг 1",
+        kilometers = "~ 20.км",
+        address = "мкр.Казахфильм ул.Арычная 82",
+        whatsAppIcon = R.drawable.whatsapp_logo,
+        phoneIcon = Icons.Default.Phone,
+        mapRoute = Icons.Default.Place
+    ),
+    Points(
+        heading = "Миг 1",
+        kilometers = "~ 20.км",
+        address = "мкр.Казахфильм ул.Арычная 82",
+        whatsAppIcon = R.drawable.whatsapp_logo,
+        phoneIcon = Icons.Default.Phone,
+        mapRoute = Icons.Default.Place
+    ),
+    Points(
+        heading = "Миг 1",
+        kilometers = "~ 20.км",
+        address = "мкр.Казахфильм ул.Арычная 82",
+        whatsAppIcon = R.drawable.whatsapp_logo,
+        phoneIcon = Icons.Default.Phone,
+        mapRoute = Icons.Default.Place
+    ),
+    Points(
+        heading = "Миг 1",
+        kilometers = "~ 20.км",
+        address = "мкр.Казахфильм ул.Арычная 82",
+        whatsAppIcon = R.drawable.whatsapp_logo,
+        phoneIcon = Icons.Default.Phone,
+        mapRoute = Icons.Default.Place
+    ),
+    Points(
+        heading = "Миг 1",
+        kilometers = "~ 20.км",
+        address = "мкр.Казахфильм ул.Арычная 82",
+        whatsAppIcon = R.drawable.whatsapp_logo,
+        phoneIcon = Icons.Default.Phone,
+        mapRoute = Icons.Default.Place
+    ),
+)
 
 enum class BottomSheetType {
     SELL,

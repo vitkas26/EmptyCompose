@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.theme
+package com.experimental.emptycompose.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.experimental.emptycompose.theme.MigBackground
 import com.experimental.emptycompose.ui.data.BottomSheetType
 import com.experimental.emptycompose.ui.data.Rates
 import kotlinx.coroutines.launch
@@ -51,6 +52,7 @@ fun MainRates(
                         getBottomSheetState(BottomSheetType.BUY)
                     }
                 }
+                .padding(end = 20.dp)
                 .weight(1f)
                 .clip(RoundedCornerShape(4.dp))
                 .background(Color.White)
@@ -65,13 +67,13 @@ fun MainRates(
                 color = MigBackground
             )
         }
-        Spacer(modifier = Modifier.padding(end = 20.dp))
         Column(
             Modifier
                 .clickable {
                     getIdForBottomSheet(item.id)
                     dialogListener(true)
                 }
+                .padding(end = 20.dp)
                 .weight(1f)
                 .height(50.dp),
             verticalArrangement = Arrangement.Center,
@@ -84,7 +86,6 @@ fun MainRates(
                 color = color
             )
         }
-        Spacer(modifier = Modifier.padding(end = 20.dp))
         Column(
             Modifier
                 .clickable {

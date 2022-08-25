@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.theme
+package com.experimental.emptycompose.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.experimental.emptycompose.theme.MainHeader
 import com.experimental.emptycompose.ui.data.BottomSheetType
 import com.experimental.emptycompose.ui.data.Rates
 import com.experimental.emptycompose.ui.data.lisOfFullRates
@@ -49,7 +50,6 @@ fun MainBody(
                 dialogListener
             )
         }
-        item { Spacer(modifier = Modifier.padding(bottom = 20.dp)) }
         if (lazyItems.size == listOfRates.size) {
             item {
                 Column(
@@ -60,8 +60,7 @@ fun MainBody(
                         },
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(modifier = Modifier.padding(bottom = 20.dp))
-                    Text(text = "Дополнительные валюты", color = Color.White)
+                    Text(text = "Дополнительные валюты", color = Color.White, modifier = Modifier.padding(top = 20.dp))
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = "DropDown",
@@ -72,60 +71,9 @@ fun MainBody(
             }
         } else {
             item {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-
-                }
+                Spacer(modifier = Modifier.padding(bottom = 20.dp))
                 MainFooter()
             }
         }
     }
 }
-
-
-//    var expand by remember { mutableStateOf(0) }
-//
-//    MainHeader()
-//
-//    if (expand == 0) {
-//        for (item in itemRatesList) {
-//            MainRates(item = item, expandBottomSheet, lambdaBottomSheet)
-//        }
-//    } else {
-//        for (item in itemRatesList) {
-//            MainRates(
-//                item = item,
-//                expandBottomSheet = expandBottomSheet,
-//                lambdaBottomSheet = lambdaBottomSheet
-//            )
-//        }
-//        for (item in itemAdditional) {
-//            MainRates(
-//                item = item,
-//                expandBottomSheet = expandBottomSheet,
-//                lambdaBottomSheet = lambdaBottomSheet
-//            )
-//        }
-//    }
-//
-//    Column(
-//        Modifier
-//            .fillMaxWidth()
-//            .clickable {
-//                expand = 1
-//            },
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Spacer(modifier = Modifier.padding(bottom = 20.dp))
-//        Text(text = "Дополнительные валюты", color = Color.White)
-//        Icon(
-//            imageVector = Icons.Default.ArrowDropDown,
-//            contentDescription = "DropDown",
-//            tint = Color.White
-//        )
-//    }
-//    MainFooter()
-//}
