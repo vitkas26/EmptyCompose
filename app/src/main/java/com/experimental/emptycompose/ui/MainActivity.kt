@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.experimental.emptycompose.theme.*
+import com.experimental.emptycompose.ui.bottomSheet.BottomSheetContent
 import com.experimental.emptycompose.ui.data.BottomSheetType
 import com.experimental.emptycompose.ui.data.lisOfFullRates
 import com.experimental.emptycompose.ui.data.listOfDrawer
@@ -26,26 +28,35 @@ class MainActivity : ComponentActivity() {
         setContent {
             val scaffoldState = rememberScaffoldState()
             val scope = rememberCoroutineScope()
+
             var id by remember { mutableStateOf(0) }
+            val getIdForDialogs = { index: Int -> id = index }
+
             val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
             val onBottomSheetValue = { modalBottomSheetState }
-            val getIdForDialogs = { index: Int -> id = index }
+
             var bottomSheetType by remember { mutableStateOf(BottomSheetType.BUY)}
             val getBottomSheetState = {state: BottomSheetType -> bottomSheetType = state}
-            val keyboardController = LocalSoftwareKeyboardController.current
+
             val openDialog = remember { mutableStateOf(false) }
             val dialogListener = {state:Boolean -> openDialog.value = state}
 
+            val keyboardController = LocalSoftwareKeyboardController.current
+
 
             ModalBottomSheetLayout(
+                sheetShape = RoundedCornerShape(20.dp),
                 sheetState = modalBottomSheetState,
                 sheetContent = {
                     BottomSheetContent(item = lisOfFullRates[id], type = bottomSheetType)
                 }
             ) {
+
                 if (!modalBottomSheetState.isVisible){
                     keyboardController?.hide()
+//                    clearTextFieldValues(false)
                 }
+
                 Scaffold(
                     scaffoldState = scaffoldState,
                     topBar = {

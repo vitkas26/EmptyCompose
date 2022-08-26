@@ -1,6 +1,8 @@
-package com.experimental.emptycompose.theme
+package com.experimental.emptycompose.ui.bottomSheet
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,11 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,9 +25,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.experimental.emptycompose.theme.MigBlue
+import com.experimental.emptycompose.theme.MigGrey
+import com.experimental.emptycompose.ui.data.Rates
 
 @Composable
 fun CustomTextFieldBuy(
+    item: String,
+    removeSellValue: () -> Unit,
+    getSellValue: String,
+    sendValue: (String)-> Unit,
     modifier: Modifier = Modifier,
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
@@ -37,20 +42,30 @@ fun CustomTextFieldBuy(
     fontSize: TextUnit = 28.sp
 ) {
 
-    var text by rememberSaveable { mutableStateOf("") }
+    var buyAmount by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed: Boolean by interactionSource.collectIsPressedAsState()
 
-    BasicTextField(modifier = modifier
-        .background(
-            MigGrey,
-            MaterialTheme.shapes.small,
-        )
-        .fillMaxWidth(),
-        value = text,
+    if(isPressed){
+        removeSellValue()
+        buyAmount = ""
+    }
+
+    BasicTextField(
+        modifier = modifier
+            .background(
+                MigGrey,
+                MaterialTheme.shapes.small,
+            )
+            .fillMaxWidth(),
+        value = getSellValue.ifEmpty { buyAmount },
         onValueChange = {
-            text = it
+            buyAmount = it
+            sendValue((it.ifEmpty { "1" }.toDouble().toInt()/item.toDouble().toInt()).toString())
         },
+        interactionSource = interactionSource,
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Number
@@ -59,7 +74,7 @@ fun CustomTextFieldBuy(
             focusManager.clearFocus()
         }),
         singleLine = true,
-        cursorBrush = SolidColor(Color.Transparent),
+        cursorBrush = SolidColor(Color.Black),
         textStyle = LocalTextStyle.current.copy(
             color = MigBlue,
             fontSize = fontSize,
@@ -71,8 +86,11 @@ fun CustomTextFieldBuy(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (leadingIcon != null) leadingIcon()
-                Box(Modifier.weight(1f)) {
-                    if (text.isEmpty()) Text(
+                Box(
+                    Modifier
+                        .weight(1f)
+                ) {
+                    if (buyAmount.isEmpty() && getSellValue.isEmpty()) Text(
                         placeholderText,
                         Modifier
                             .align(Alignment.Center)

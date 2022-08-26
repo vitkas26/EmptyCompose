@@ -1,30 +1,44 @@
-package com.experimental.emptycompose.theme
+package com.experimental.emptycompose.ui.bottomSheet
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.experimental.emptycompose.theme.*
 import com.experimental.emptycompose.ui.data.BottomSheetType
 import com.experimental.emptycompose.ui.data.Rates
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun BottomSheetContent(
     type: BottomSheetType,
-    item: Rates
+    item: Rates,
 ) {
     val getString = listOf("Получить", "Купить")
     val sellString = listOf("Продать", "Требуется")
+    var buyTextFieldValue by remember { mutableStateOf("") }
+    var sellTextFieldValue by remember { mutableStateOf("") }
+    val getSellTextFieldValue = { value: String -> sellTextFieldValue = value }
+    val removeSellTextFieldValue = {sellTextFieldValue = "" }
+    val removeBuyTextFieldValue = {buyTextFieldValue = "" }
+    val getBuyTextFieldValue = { value: String -> buyTextFieldValue = value }
 
-
+    val rateBuyOrSell:String = when (type) {
+        BottomSheetType.BUY -> item.firstNum
+        else -> {
+            item.secondNum
+        }
+    }
     val placeholderText: String = when (type) {
         BottomSheetType.BUY -> item.firstNum
         else -> {
@@ -84,6 +98,10 @@ fun BottomSheetContent(
                 .padding(bottom = 45.dp)
         )
         CustomTextFieldSell(
+            item = rateBuyOrSell,
+            sendValue = getSellTextFieldValue,
+            removeBuyValue = removeBuyTextFieldValue,
+            getBuyValue = buyTextFieldValue,
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.Edit,
@@ -110,6 +128,10 @@ fun BottomSheetContent(
                 .padding(bottom = 45.dp)
         )
         CustomTextFieldBuy(
+            item = rateBuyOrSell,
+            sendValue = getBuyTextFieldValue,
+            removeSellValue = removeSellTextFieldValue,
+            getSellValue = sellTextFieldValue,
             placeholderText = placeholderText,
             trailingIcon = {
                 Icon(
