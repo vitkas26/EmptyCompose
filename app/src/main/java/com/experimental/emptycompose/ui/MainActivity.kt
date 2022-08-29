@@ -1,22 +1,27 @@
 package com.experimental.emptycompose.ui
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import com.experimental.emptycompose.theme.*
 import com.experimental.emptycompose.ui.bottomSheet.BottomSheetContent
 import com.experimental.emptycompose.ui.data.BottomSheetType
 import com.experimental.emptycompose.ui.data.lisOfFullRates
 import com.experimental.emptycompose.ui.data.listOfDrawer
+import com.experimental.emptycompose.ui.navigation.AppBar
+import com.experimental.emptycompose.ui.navigation.DrawerBody
+import com.experimental.emptycompose.ui.navigation.DrawerHeader
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +29,8 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
 
         setContent {
             val scaffoldState = rememberScaffoldState()
@@ -35,32 +42,37 @@ class MainActivity : ComponentActivity() {
             val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
             val onBottomSheetValue = { modalBottomSheetState }
 
-            var bottomSheetType by remember { mutableStateOf(BottomSheetType.BUY)}
-            val getBottomSheetState = {state: BottomSheetType -> bottomSheetType = state}
+            var bottomSheetType by remember { mutableStateOf(BottomSheetType.BUY) }
+            val getBottomSheetState = { state: BottomSheetType -> bottomSheetType = state }
 
             val openDialog = remember { mutableStateOf(false) }
-            val dialogListener = {state:Boolean -> openDialog.value = state}
+            val dialogListener = { state: Boolean -> openDialog.value = state }
 
             val keyboardController = LocalSoftwareKeyboardController.current
 
+            var tabIndex by remember{ mutableStateOf(-1)}
+            val changeTabIndex = {updateIndex:Int -> tabIndex = updateIndex}
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Share this App with friends")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            val context = LocalContext.current
 
             ModalBottomSheetLayout(
-                sheetShape = RoundedCornerShape(20.dp),
+                sheetShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
                 sheetState = modalBottomSheetState,
                 sheetContent = {
-                    BottomSheetContent(item = lisOfFullRates[id], type = bottomSheetType)
+                    BottomSheetContent(item = lisOfFullRates[id], type = bottomSheetType, bottomSheetState = onBottomSheetValue)
                 }
             ) {
-
-                if (!modalBottomSheetState.isVisible){
-                    keyboardController?.hide()
-//                    clearTextFieldValues(false)
-                }
-
                 Scaffold(
                     scaffoldState = scaffoldState,
                     topBar = {
-                        com.experimental.emptycompose.ui.navigation.AppBar(
+                        AppBar(
+                            onItemClick = {context.startActivity(shareIntent)},
                             onNavigationIconClick = {
                                 scope.launch {
                                     scaffoldState.drawerState.open()
@@ -73,19 +85,38 @@ class MainActivity : ComponentActivity() {
                         DrawerBody(
                             items = listOfDrawer,
                             onItemClick = {
-                                Toast.makeText(this@MainActivity, it.title, Toast.LENGTH_SHORT)
-                                    .show()
+                                if (it.id.toInt() > 0){
+                                    tabIndex = 1
+                                    scope.launch {
+                                        scaffoldState.drawerState.close()
+                                    }
+                                }else{
+                                    tabIndex = 0
+                                    scope.launch {
+                                        scaffoldState.drawerState.close()
+                                    }
+                                }
                             },
                             modifier = Modifier.padding(16.dp)
                         )
                     }) {
                     Column {
-                        CustomTabs(onBottomSheetValue, getIdForDialogs, getBottomSheetState, dialogListener)
-                        }
+                        CustomTabs(
+                            tabIndex,
+                            changeTabIndex,
+                            onBottomSheetValue,
+                            getIdForDialogs,
+                            getBottomSheetState,
+                            dialogListener
+                        )
                     }
                 }
-            if (openDialog.value){
+            }
+            if (openDialog.value) {
                 CallDialog(dialogListener, item = lisOfFullRates[id])
+            }
+            if (!modalBottomSheetState.isVisible) {
+                keyboardController?.hide()
             }
         }
     }

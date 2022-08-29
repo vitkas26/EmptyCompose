@@ -1,7 +1,9 @@
 package com.experimental.emptycompose.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -11,7 +13,6 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.experimental.emptycompose.theme.MainHeader
 import com.experimental.emptycompose.theme.MigBackground
 import com.experimental.emptycompose.theme.MigGrey
 import com.experimental.emptycompose.theme.MigGreyText
@@ -20,13 +21,15 @@ import com.experimental.emptycompose.ui.data.BottomSheetType
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CustomTabs(
+    tabIndex:Int,
+    changeTabIndex:(Int)-> Unit,
     onBottomSheetValue: () -> ModalBottomSheetState,
-    getIdForBottomSheet: (Int) -> Unit,
+    getIdForDialogs: (Int) -> Unit,
     getBottomSheetState: (BottomSheetType) -> Unit,
-    dialogListener: (Boolean) -> Unit
+    dialogListener: (Boolean) -> Unit,
 ) {
-    var selectedIndex by remember { mutableStateOf(0) }
     val list = listOf("Курсы Валют", "Ближайшие пункты")
+    var selectedIndex by remember { mutableStateOf(0) }
 
     TabRow(selectedTabIndex = selectedIndex,
         backgroundColor = MigGrey,
@@ -65,7 +68,18 @@ fun CustomTabs(
             )
         }
     }
-    TabContent(selectedIndex, onBottomSheetValue, getIdForBottomSheet, getBottomSheetState, dialogListener)
+    if (tabIndex!=-1){
+        selectedIndex = tabIndex
+        changeTabIndex(-1)
+    }
+
+    TabContent(
+        selectedIndex,
+        onBottomSheetValue,
+        getIdForDialogs,
+        getBottomSheetState,
+        dialogListener
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -73,7 +87,7 @@ fun CustomTabs(
 fun TabContent(
     selectedIndex: Int,
     onBottomSheetValue: () -> ModalBottomSheetState,
-    getIdForBottomSheet: (Int) -> Unit,
+    getIdForDialogs: (Int) -> Unit,
     getBottomSheetState: (BottomSheetType) -> Unit,
     dialogListener: (Boolean) -> Unit
 ) {
@@ -87,7 +101,7 @@ fun TabContent(
         when (selectedIndex) {
             0 -> MainBody(
                 onBottomSheetValue,
-                getIdForBottomSheet,
+                getIdForDialogs,
                 getBottomSheetState,
                 dialogListener
             )

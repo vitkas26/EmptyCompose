@@ -1,4 +1,4 @@
-package com.experimental.emptycompose.theme
+package com.experimental.emptycompose.ui.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.experimental.emptycompose.R
+import com.experimental.emptycompose.theme.MigBlue
 import com.experimental.emptycompose.ui.data.MenuItem
 
 @Composable

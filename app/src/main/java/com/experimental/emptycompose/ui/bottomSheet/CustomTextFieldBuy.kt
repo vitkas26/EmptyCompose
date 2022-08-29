@@ -10,12 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
@@ -29,6 +29,7 @@ import com.experimental.emptycompose.theme.MigBlue
 import com.experimental.emptycompose.theme.MigGrey
 import com.experimental.emptycompose.ui.data.Rates
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CustomTextFieldBuy(
     item: String,
@@ -36,6 +37,7 @@ fun CustomTextFieldBuy(
     getSellValue: String,
     sendValue: (String)-> Unit,
     modifier: Modifier = Modifier,
+    bottomSheetState: () -> ModalBottomSheetState,
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
     placeholderText: String,
@@ -48,7 +50,7 @@ fun CustomTextFieldBuy(
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed: Boolean by interactionSource.collectIsPressedAsState()
 
-    if(isPressed){
+    if(isPressed||!bottomSheetState.invoke().isVisible){
         removeSellValue()
         buyAmount = ""
     }

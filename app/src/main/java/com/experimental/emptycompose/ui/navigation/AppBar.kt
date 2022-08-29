@@ -22,9 +22,11 @@ import com.experimental.emptycompose.theme.MigBlue
 
 @Composable
 fun AppBar(
+    onItemClick: () -> Unit,
     onNavigationIconClick: () -> Unit,
     itemTextStyle: TextStyle = TextStyle(fontSize = 18.sp, color = MigBlue, fontWeight = FontWeight.Bold),
 ) {
+
     TopAppBar(
         title = {},
         backgroundColor = Color.White,
@@ -36,7 +38,7 @@ fun AppBar(
             }
         },
         actions = {
-            IconButton(onClick = { "Clicked" }) {
+            IconButton(onClick = onItemClick) {
                 Image(
                     painterResource(id = R.drawable.ic_share_svgrepo_com),
                     contentDescription = "Share App", Modifier.size(20.dp)

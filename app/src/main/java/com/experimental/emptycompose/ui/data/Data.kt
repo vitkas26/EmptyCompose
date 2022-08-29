@@ -39,25 +39,25 @@ val lisOfFullRates = mutableListOf(
 val listOfDrawer =
     mutableListOf(
         MenuItem(
-            id = "1",
+            id = "0",
             title = "Главная",
             contentDescription = "Main menu",
             icon = Icons.Default.Home
         ),
         MenuItem(
-            id = "2",
+            id = "1",
             title = "Забронировать сумму/курс",
             contentDescription = "Main menu",
             icon = Icons.Default.Home
         ),
         MenuItem(
-            id = "3",
+            id = "2",
             title = "Золотые слитки НБ РК",
             contentDescription = "Main menu",
             icon = Icons.Default.Home
         ),
         MenuItem(
-            id = "4",
+            id = "3",
             title = "Ближайшие пункты",
             contentDescription = "Main menu",
             icon = Icons.Default.Share,

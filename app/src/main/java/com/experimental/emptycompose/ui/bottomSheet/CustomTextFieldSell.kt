@@ -10,16 +10,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +30,7 @@ import com.experimental.emptycompose.theme.MigBlue
 import com.experimental.emptycompose.theme.MigGrey
 import com.experimental.emptycompose.ui.data.Rates
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CustomTextFieldSell(
     item: String,
@@ -40,15 +41,17 @@ fun CustomTextFieldSell(
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
     placeholderText: String = "1",
+    bottomSheetState: () -> ModalBottomSheetState,
     fontSize: TextUnit = 28.sp
 ) {
+
     var amount by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed: Boolean by interactionSource.collectIsPressedAsState()
 
-    if (isPressed){
+    if (isPressed||!bottomSheetState.invoke().isVisible){
         removeBuyValue()
         amount = ""
     }
@@ -73,7 +76,7 @@ fun CustomTextFieldSell(
         }),
         singleLine = true,
         interactionSource = interactionSource        ,
-        cursorBrush = SolidColor(Color.Transparent),
+        cursorBrush = SolidColor(Color.Black),
         textStyle = LocalTextStyle.current.copy(
             color = MigBlue,
             fontSize = fontSize,

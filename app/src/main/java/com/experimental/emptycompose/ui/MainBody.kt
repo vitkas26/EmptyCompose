@@ -25,7 +25,7 @@ import com.experimental.emptycompose.ui.data.listOfRates
 @Composable
 fun MainBody(
     onBottomSheetValue: () -> ModalBottomSheetState,
-    getIdForBottomSheet: (Int) -> Unit,
+    getIdForDialogs: (Int) -> Unit,
     getBottomSheetState: (BottomSheetType) -> Unit,
     dialogListener: (Boolean) -> Unit
 ) {
@@ -45,7 +45,7 @@ fun MainBody(
             MainRates(
                 item,
                 onBottomSheetValue,
-                getIdForBottomSheet,
+                getIdForDialogs,
                 getBottomSheetState,
                 dialogListener
             )

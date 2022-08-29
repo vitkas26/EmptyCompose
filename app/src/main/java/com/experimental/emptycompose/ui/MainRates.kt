@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 fun MainRates(
     item: Rates,
     onBottomSheetValue: () -> ModalBottomSheetState,
-    getIdForBottomSheet: (Int) -> Unit,
+    getIdForDialogs: (Int) -> Unit,
     getBottomSheetState: (BottomSheetType) -> Unit,
     dialogListener: (Boolean) -> Unit
 ) {
@@ -48,7 +48,7 @@ fun MainRates(
                             .show()
                     }
                     scopeBottomSheetId.launch {
-                        getIdForBottomSheet(item.id)
+                        getIdForDialogs(item.id)
                         getBottomSheetState(BottomSheetType.BUY)
                     }
                 }
@@ -70,7 +70,7 @@ fun MainRates(
         Column(
             Modifier
                 .clickable {
-                    getIdForBottomSheet(item.id)
+                    getIdForDialogs(item.id)
                     dialogListener(true)
                 }
                 .padding(end = 20.dp)
@@ -90,7 +90,7 @@ fun MainRates(
             Modifier
                 .clickable {
                     scopeBottomSheet.launch {
-                        getIdForBottomSheet(item.id)
+                        getIdForDialogs(item.id)
                         getBottomSheetState(BottomSheetType.SELL)
                         onBottomSheetValue
                             .invoke()

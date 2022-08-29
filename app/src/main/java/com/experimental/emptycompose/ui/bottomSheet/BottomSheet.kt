@@ -1,5 +1,6 @@
 package com.experimental.emptycompose.ui.bottomSheet
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,23 +18,36 @@ import androidx.compose.ui.unit.sp
 import com.experimental.emptycompose.theme.*
 import com.experimental.emptycompose.ui.data.BottomSheetType
 import com.experimental.emptycompose.ui.data.Rates
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheetContent(
     type: BottomSheetType,
     item: Rates,
+    bottomSheetState: () -> ModalBottomSheetState
 ) {
+
+    val scope = rememberCoroutineScope()
+
     val getString = listOf("Получить", "Купить")
     val sellString = listOf("Продать", "Требуется")
+
     var buyTextFieldValue by remember { mutableStateOf("") }
-    var sellTextFieldValue by remember { mutableStateOf("") }
-    val getSellTextFieldValue = { value: String -> sellTextFieldValue = value }
-    val removeSellTextFieldValue = {sellTextFieldValue = "" }
-    val removeBuyTextFieldValue = {buyTextFieldValue = "" }
     val getBuyTextFieldValue = { value: String -> buyTextFieldValue = value }
 
-    val rateBuyOrSell:String = when (type) {
+    var sellTextFieldValue by remember { mutableStateOf("") }
+    val getSellTextFieldValue = { value: String -> sellTextFieldValue = value }
+
+    val removeSellTextFieldValue = { sellTextFieldValue = "" }
+    val removeBuyTextFieldValue = { buyTextFieldValue = "" }
+
+    if (!bottomSheetState.invoke().isVisible){
+        removeBuyTextFieldValue()
+        removeSellTextFieldValue()
+    }
+
+    val rateBuyOrSell: String = when (type) {
         BottomSheetType.BUY -> item.firstNum
         else -> {
             item.secondNum
@@ -65,6 +79,14 @@ fun BottomSheetContent(
             tint = MigGrey,
             modifier = Modifier
                 .align(Alignment.TopEnd)
+                .clickable {
+                    scope.launch {
+                        bottomSheetState.invoke().isVisible
+                        bottomSheetState
+                            .invoke()
+                            .hide()
+                    }
+                }
         )
         Text(
             text = "По курсу", fontSize = 16.sp, color = MigGreyText,
@@ -98,6 +120,7 @@ fun BottomSheetContent(
                 .padding(bottom = 45.dp)
         )
         CustomTextFieldSell(
+            bottomSheetState = bottomSheetState,
             item = rateBuyOrSell,
             sendValue = getSellTextFieldValue,
             removeBuyValue = removeBuyTextFieldValue,
@@ -128,6 +151,7 @@ fun BottomSheetContent(
                 .padding(bottom = 45.dp)
         )
         CustomTextFieldBuy(
+            bottomSheetState = bottomSheetState,
             item = rateBuyOrSell,
             sendValue = getBuyTextFieldValue,
             removeSellValue = removeSellTextFieldValue,
@@ -149,6 +173,7 @@ fun BottomSheetContent(
         )
     }
 }
+
 
 
 
